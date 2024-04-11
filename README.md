@@ -2,6 +2,10 @@
 
 ### Notes
 
+#### Environment
+
+Run `nix develop` for a devShell, `nix-shell` should also work.
+
 #### Hosts
 * Laptop: `jess-laptop`
 
