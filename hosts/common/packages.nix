@@ -3,6 +3,7 @@
     git
     vim
     curl wget
+    zip unzip
     python3
   ];
 }
