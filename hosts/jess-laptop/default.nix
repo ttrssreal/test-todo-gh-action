@@ -24,6 +24,9 @@
     networkmanager.enable = true;
   };
 
+  # User
+  environment.sessionVariables.EDITOR = "nvim";
+
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
