@@ -31,6 +31,7 @@
 
   security.rtkit.enable = true; # Used for audio
 
+  # Services
   services.thermald.enable = true;
   services.pipewire = {
     enable = true;
