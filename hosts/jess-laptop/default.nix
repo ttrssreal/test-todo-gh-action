@@ -45,8 +45,6 @@
   };
 
   # Programs
-  programs.status-bar.enable = true;
-  programs.bt-con.enable = true;
   programs.steam.enable = true;
   programs.slock.enable = true;
   programs.alacritty = {
