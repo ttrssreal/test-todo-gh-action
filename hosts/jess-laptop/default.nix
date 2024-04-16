@@ -13,7 +13,7 @@
     (flakeDir + /modules/status-bar.nix)
     (flakeDir + /modules/bt-con.nix)
     (flakeDir + /modules/dwm.nix)
-    (flakeDir + /modules/docker.nix)
+    (flakeDir + /modules/podman.nix)
     (flakeDir + /modules/bluetooth.nix)
   ];
 
