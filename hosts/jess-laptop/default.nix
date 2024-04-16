@@ -45,10 +45,6 @@
   };
 
   # Programs
-  programs.dwm = {
-    enable = true;
-    use-fork = true;
-  };
   programs.status-bar.enable = true;
   programs.bt-con.enable = true;
   programs.steam.enable = true;
@@ -56,6 +52,10 @@
   programs.alacritty = {
     enable = true;
     unstable = true;
+  };
+  programs.dwm = {
+    enable = true;
+    use-fork = true;
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
