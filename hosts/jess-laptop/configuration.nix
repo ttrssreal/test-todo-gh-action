@@ -79,6 +79,7 @@
       pkgs.steam
       pkgs.mpv
       pkgs.htop
+      pkgs.kubectl
     ];
   };
 }
