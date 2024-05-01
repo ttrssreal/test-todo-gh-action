@@ -24,6 +24,9 @@
     networkmanager.enable = true;
   };
 
+  # Make gnome apps happy
+  programs.dconf.enable = true;
+
   # User
   environment.sessionVariables.EDITOR = "nvim";
 
