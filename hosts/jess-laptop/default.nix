@@ -19,6 +19,13 @@
 
   time.timeZone = "Pacific/Auckland";
 
+  # Enable opengl
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
   networking = {
     hostName = "jess-laptop";
     networkmanager.enable = true;
