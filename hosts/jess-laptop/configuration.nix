@@ -81,6 +81,8 @@
       htop
       kubectl
       jq
+      bintools
+      ghidra
     ];
   };
 }
