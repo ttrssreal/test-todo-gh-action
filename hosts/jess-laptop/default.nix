@@ -28,6 +28,7 @@
   };
 
   networking = {
+    firewall.enable = false;
     hostName = "jess-laptop";
     networkmanager.enable = true;
   };
