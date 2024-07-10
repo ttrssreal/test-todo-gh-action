@@ -9,6 +9,7 @@
 
     (flakeDir + /hosts/common)
 
+    (flakeDir + /modules/binaryninja.nix)
     (flakeDir + /modules/alacritty.nix)
     (flakeDir + /modules/status-bar.nix)
     (flakeDir + /modules/bt-con.nix)
