@@ -84,6 +84,9 @@
       jq
       bintools
       ghidra
+      prismlauncher
+      obs-studio
+      gimp
     ];
   };
 }
