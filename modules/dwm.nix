@@ -19,8 +19,10 @@ in {
 
   config.services.xserver = lib.mkIf cfg.enable {
     enable = true;
-    layout = "nz";
-    xkbVariant = "";
+    xkb = {
+      layout = "nz";
+      variant = "";
+    };
     displayManager.startx.enable = true;
     windowManager.dwm = {
       enable = true;
