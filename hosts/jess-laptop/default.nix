@@ -4,12 +4,12 @@
 
 { inputs, config, pkgs, flakeDir, ... }: {
   imports = [
-    ./configuration.nix
     ./hardware-configuration.nix
+
+    (flakeDir + /users/jess)
 
     (flakeDir + /hosts/common)
 
-    (flakeDir + /modules/binaryninja.nix)
     (flakeDir + /modules/alacritty.nix)
     (flakeDir + /modules/status-bar.nix)
     (flakeDir + /modules/bt-con.nix)
@@ -36,9 +36,6 @@
   # Make gnome apps happy
   programs.dconf.enable = true;
 
-  # User
-  environment.sessionVariables.EDITOR = "nvim";
-
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -48,6 +45,7 @@
 
   # Services
   services.thermald.enable = true;
+  services.pcscd.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -57,7 +55,6 @@
   };
 
   # Programs
-  programs.steam.enable = true;
   programs.slock.enable = true;
   programs.alacritty = {
     enable = true;
@@ -68,8 +65,23 @@
     use-fork = true;
   };
 
+  fonts = {
+    packages = [
+      pkgs.font-awesome
+      pkgs.nerdfonts
+    ];
+    fontconfig = {
+      enable = true;
+      hinting.autohint = true;
+    };
+  };
+
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
