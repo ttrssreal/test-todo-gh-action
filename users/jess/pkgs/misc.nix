@@ -55,4 +55,6 @@
   prismlauncher
   obs-studio
   gimp
+  p7zip
+  inkscape
 ]

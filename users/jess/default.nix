@@ -1,7 +1,4 @@
 { inputs, config, pkgs, flakeDir, ... }: {
-  imports = [
-    (flakeDir + /modules/binaryninja.nix)
-  ];
 
   users.users.jess = {
     isNormalUser = true;
@@ -9,7 +6,7 @@
     shell = pkgs.zsh;
     home = "/home/jess";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = import ./pkgs.nix { inherit pkgs; };
+    packages = import ./pkgs { inherit pkgs inputs flakeDir; };
   };
 
   programs.zsh.enable = true;

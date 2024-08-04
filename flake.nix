@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    erosanix.url = "github:emmanuelrosa/erosanix";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, erosanix }:
   let
     system = "x86_64-linux";
     hostname = "jess-laptop";
