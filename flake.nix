@@ -7,7 +7,7 @@
     erosanix.url = "github:emmanuelrosa/erosanix";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, erosanix }:
+  outputs = inputs @ { self, nixpkgs }:
   let
     system = "x86_64-linux";
     hostname = "jess-laptop";
