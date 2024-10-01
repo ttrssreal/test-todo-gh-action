@@ -1,24 +1,48 @@
-{ inputs, config, pkgs, flakeDir, ... }: {
+# NixOS module - entrypoint for HM
+
+{ inputs
+, pkgs
+, hostname
+, util
+, ...
+}: {
+  imports = with inputs; [
+    home-manager.nixosModules.home-manager
+  ];
 
   users.users.jess = {
-    isNormalUser = true;
     description = "Jess";
+    isNormalUser = true;
     shell = pkgs.zsh;
-    home = "/home/jess";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = import ./pkgs { inherit pkgs inputs flakeDir; };
+    # we install zsh via hm
+    ignoreShellProgramCheck = true;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
   };
 
-  programs.zsh.enable = true;
-  environment.sessionVariables.EDITOR = "nvim";
-  programs.steam.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-curses;
+  fonts = {
+    packages = [
+      pkgs.font-awesome
+      pkgs.nerdfonts
+    ];
+    fontDir.enable = true;
+    fontconfig = {
+      enable = true;
+      hinting.autohint = true;
+    };
   };
 
+  home-manager = {
+    backupFileExtension = "orig";
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.jess =
+      import (./. + "/hosts/${hostname}");
+    extraSpecialArgs = {
+      inherit inputs util;
+    };
+  };
 }
-

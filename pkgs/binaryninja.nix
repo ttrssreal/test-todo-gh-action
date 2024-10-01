@@ -1,9 +1,7 @@
 {
-  fetchzip,
   stdenv,
   autoPatchelfHook,
   makeWrapper,
-  fetchurl,
   unzip,
   libGL,
   glib,
@@ -14,9 +12,8 @@
   libxkbcommon,
   wayland,
   qt6,
-  xcb-util-cursor
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   name = "binary-ninja";
   buildInputs = [
     autoPatchelfHook
@@ -39,10 +36,8 @@ stdenv.mkDerivation rec {
     qt6.full
   ];
 
-  src = fetchzip {
-    url = "https://binaryninja.s3.amazonaws.com/installers/binaryninja_personal_linux.zip";
-    sha256 = "sha256-LIkSYxOhx/XRYEpdo32YLnVC4QlBeUha1k5DDrjSV48=";
-  };
+  # oop..
+  src = /home/jess/misc/binaryninja_personal_linux.zip;
 
   buildPhase = ":";
   installPhase = ''

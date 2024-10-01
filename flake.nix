@@ -2,27 +2,31 @@
   description = "nix-config for my system";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      # unstable branch
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs-stable.url = "github:NixOS/nixpkgs?ref=nixos-24.05";
+    status-bar.url = "github:ttrssreal/status-bar";
+    nixvim.url = "github:nix-community/nixvim?ref=nixos-24.05";
     erosanix.url = "github:emmanuelrosa/erosanix";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = inputs @ { self, nixpkgs }:
+  outputs = inputs @ { self, nixpkgs, ... }:
   let
-    system = "x86_64-linux";
-    hostname = "jess-laptop";
-    pkgs = nixpkgs.legacyPackages.${system};
+    inherit (nixpkgs) lib;
+    util = import ./util.nix { inherit util lib inputs; };
   in {
-    devShells.${system}.default = import ./shell.nix { inherit pkgs; };
-    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs;
-        flakeDir = ./.;
-      };
-      modules = [
-        ./hosts/${hostname}
+    devShells = util.mkDevShells nixpkgs [
+      "x86_64-linux"
+    ];
+
+    nixosConfigurations =
+      util.mkHost "jess-laptop" [
+        "jess"
       ];
-    };
   };
 }

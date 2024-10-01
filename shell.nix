@@ -14,7 +14,6 @@ pkgs.mkShell {
   name = "nix-config-dev-shell";
   NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
   nativeBuildInputs = with pkgs; [
-    vim
     git
     nix
   ];

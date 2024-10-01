@@ -2,7 +2,6 @@
 , wine
 , unar
 , pkgsi686Linux
-, makeWrapper
 , runCommand
 , fetchgit
 }:
