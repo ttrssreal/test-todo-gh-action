@@ -1,6 +1,17 @@
 { pkgs
+, lib
+, util
 , ...
 }: {
+  imports = lib.lists.flatten [
+    (util.hmModules [
+      /nix
+      /zsh
+      /direnv
+      /git
+    ])
+  ];
+
   home = {
     username = "jess";
     shellAliases = {

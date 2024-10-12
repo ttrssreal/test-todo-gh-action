@@ -6,5 +6,6 @@
     ./telescope.nix
     ./treesitter.nix
     ./cmp.nix
+    ./web-devicons.nix
   ];
 }

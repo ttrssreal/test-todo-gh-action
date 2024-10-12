@@ -1,4 +1,6 @@
-{
+{ pkgs
+, ...
+}: {
   programs.nixvim.plugins.telescope = {
     enable = true;
     settings = {
@@ -16,4 +18,7 @@
       };
     };
   };
+
+  # for live_grep
+  home.packages = [ pkgs.ripgrep ];
 }

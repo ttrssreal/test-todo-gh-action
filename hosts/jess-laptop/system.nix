@@ -21,11 +21,10 @@
       /pipewire
       /nixpkgs
       /nix
+      /podman
     ])
   ];
 
-  i18n.defaultLocale = "en_NZ.UTF-8";
-  time.timeZone = "Pacific/Auckland";
   services.thermald.enable = true;
 
   hardware.graphics = {

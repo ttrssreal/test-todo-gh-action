@@ -3,7 +3,6 @@
 }: {
   home.packages = with pkgs; [
     prismlauncher
-    docker
     openssh
     minikube
     qpwgraph
@@ -12,7 +11,6 @@
     cntr
     alsa-utils
     pwndbg
-    picom
     patchelf
     whois
     burpsuite
