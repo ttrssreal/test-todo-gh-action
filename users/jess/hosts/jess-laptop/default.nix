@@ -6,7 +6,10 @@
   jessHome = util.root /users/jess;
 in {
   imports = lib.lists.flatten [
-    ./home/pkgs
+    (util.pathsFrom jessHome [
+      /home/pkgs
+      /base.nix
+    ])
 
     (util.hmModules [
       /bt-con
@@ -19,10 +22,6 @@ in {
       /nix
       /nixvim
       /zsh
-    ])
-
-    (util.pathsFrom jessHome [
-      /base.nix
     ])
   ];
 

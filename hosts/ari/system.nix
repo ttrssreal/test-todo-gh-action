@@ -28,7 +28,7 @@
     openssh.enable = true;
     k3s = {
       enable = true;
-      role = ["server"];
+      role = "server";
     };
   };
 

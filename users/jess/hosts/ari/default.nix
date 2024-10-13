@@ -14,5 +14,7 @@ in {
     ])
   ];
 
+  jess.git.forceSSH = false;
+
   home.homeDirectory = "/home/jess";
 }
