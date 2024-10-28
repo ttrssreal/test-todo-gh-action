@@ -35,5 +35,7 @@
           jess-laptop
           ari
         ];
+
+    templates = import ./templates;
   };
 }

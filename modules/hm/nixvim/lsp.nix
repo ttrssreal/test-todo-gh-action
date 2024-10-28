@@ -9,6 +9,7 @@
         installRustc = false;
         settings.check.command = "clippy";
       };
+      clangd.enable = true;
     };
   };
 }

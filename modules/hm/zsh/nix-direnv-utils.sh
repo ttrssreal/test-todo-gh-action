@@ -19,7 +19,9 @@ EOF
 }
 flakify() {
   if [ ! -e flake.nix ]; then
-    nix flake new -t github:nix-community/nix-direnv .
+    nix flake new -t github:ttrssreal/nix-config#shell .
+    curl -LOs https://github.com/nix-community/nix-direnv/raw/refs/heads/master/templates/flake/.envrc
+    direnv allow
   elif [ ! -e .envrc ]; then
     echo "use flake" > .envrc
     direnv allow

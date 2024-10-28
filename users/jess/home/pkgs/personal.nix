@@ -12,7 +12,7 @@
     });
 in {
   home.packages = [
-    binja
+    # binja
     status-bar
     xgpro
   ];
