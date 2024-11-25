@@ -1,7 +1,8 @@
 FLAKE_ROOT := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+.PHONY = jess-laptop ari server build-%
 
-jess-laptop:
-	sudo nixos-rebuild switch --flake "${FLAKE_ROOT}#$@"
+build-%:
+	sudo nixos-rebuild build --flake "${FLAKE_ROOT}#$*"
 
-ari:
+%:
 	sudo nixos-rebuild switch --flake "${FLAKE_ROOT}#$@"

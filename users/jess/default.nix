@@ -10,11 +10,16 @@
     home-manager.nixosModules.home-manager
   ];
 
+  # define the nixos user
   users.users.jess = {
     description = "Jess";
     isNormalUser = true;
+    openssh.authorizedKeys.keyFiles = [
+      ./id_ed25519.pub
+    ];
     shell = pkgs.zsh;
-    # we install zsh via hm
+    # we install zsh via hm, so tell
+    # nixos to not worry
     ignoreShellProgramCheck = true;
     extraGroups = [
       "wheel"
@@ -23,10 +28,11 @@
     ];
   };
 
+  # TODO: where to put this?
   fonts = {
-    packages = [
-      pkgs.font-awesome
-      pkgs.nerdfonts
+    packages = with pkgs; [
+      font-awesome
+      nerdfonts
     ];
     fontDir.enable = true;
     fontconfig = {
@@ -39,10 +45,12 @@
     backupFileExtension = "orig";
     useGlobalPkgs = true;
     useUserPackages = true;
+    # define the hm user (import corr. host definition)
     users.jess =
-      import (./. + "/hosts/${hostname}");
+      import (./. + "/env/${hostname}");
     extraSpecialArgs = {
       inherit inputs util;
+      userRoot = ./.;
     };
   };
 }

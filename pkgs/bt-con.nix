@@ -1,27 +1,50 @@
 { lib
-, fetchFromGitHub
-, stdenv
-}:
-stdenv.mkDerivation {
-  pname = "bt-con";
-  version = "0.1";
+, bluez
+, writers
+, python3Packages
+}: let
+  libraries = with python3Packages; [
+    xdg-base-dirs
+  ];
+  bluetoothCtlBin = "${bluez}/bin/bluetoothctl";
+in
+  writers.writePython3Bin "bt-con" { inherit libraries; } ''
+    import re
+    import subprocess as subp
+    from xdg_base_dirs import xdg_config_home
 
-  src = fetchFromGitHub {
-    owner = "ttrssreal";
-    repo = "bt-con";
-    rev = "22918a98dda86bdbc94d16ef7b38bca12d1a9922";
-    hash = "sha256-Q6pEVv4JzPPCgi8Z2vq9EJCcYL953P7lCEOt4eCeURg=";
-  };
+    config_file = xdg_config_home() / "bt-con" / "map"
+    name_map = {}
+    options = None
 
-  installPhase = ''
-    mkdir -p $out/bin
-    install -Dm755 bt-con.py $out/bin
-    ln -s $out/bin/bt-con.py $out/bin/bt-con
-  '';
+    lines = open(config_file, "r").readlines()
+    for i, line in enumerate(lines):
+        try:
+            line = line.strip()
+            if not line:
+                continue
+            if re.match("^#", line):
+                continue
+            key, value = line.split()
+            key = bytes(key, "utf-8").decode("unicode_escape").encode("utf-8")
+            name_map[key] = value
+        except Exception as e:
+            print(e)
+            options = "Failed to parse config line: {}".format(i+1).encode()
 
-  meta = with lib; {
-    homepage = "https://github.com/ttrssreal/bt-con/";
-    description = "select bluetooth devices to connect to.";
-    platforms = platforms.unix;
-  };
-}
+    name_map[b"disconnect"] = None
+
+    p = subp.Popen(["dmenu"], stdout=subp.PIPE, stdin=subp.PIPE, stderr=subp.PIPE)
+    options = b"\n".join(name_map.keys()) if not options else options
+    stdout_data = p.communicate(input=options)[0]
+
+    selection = stdout_data.removesuffix(b"\n")
+
+    device = name_map[selection]
+
+    bluez_bin = "${bluetoothCtlBin}"  # noqa: E501
+    if device:
+        subp.run([bluez_bin, "connect", device])
+    else:
+        subp.run([bluez_bin, "disconnect"])
+  ''

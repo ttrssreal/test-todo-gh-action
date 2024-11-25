@@ -37,7 +37,7 @@ mkWindowsApp rec {
     cp ${TL866}/wine/setupapi.dll $WINEPREFIX/drive_c/windows/system32/
   '';
   winAppRun = with pkgsi686Linux; ''
-    export LD_LIBRARY_PATH=${systemd}/lib:${libusb}/lib
+    export LD_LIBRARY_PATH=${systemd}/lib:${libusb1}/lib
     wine "$WINEPREFIX/drive_c/Xgpro/Xgpro.exe" "$ARGS"
   '';
   installPhase = ''

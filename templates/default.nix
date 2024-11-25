@@ -1,3 +1,4 @@
+# TODO: how to do templates nicer?
 {
   shell = {
     path = ./shell;

@@ -2,10 +2,11 @@
 , inputs
 , ...
 }: {
+  imports = [
+    (util.root /overlays)
+  ];
+
   nixpkgs = {
     config = util.pkgsConfig;
-    overlays = import (util.root /overlays) {
-      inherit inputs util;
-    };
   };
 }

@@ -1,15 +1,14 @@
-{ pkgs
-, lib
+{ lib
 , util
+, pkgs
 , ...
 }: {
-  imports = lib.lists.flatten [
-    (util.hmModules [
-      /nix
-      /zsh
-      /direnv
-      /git
-    ])
+  imports = lib.flatten [
+    (util.hmModule /enable)
+
+    ./nix
+    ./zsh
+    ./git
   ];
 
   home = {
@@ -20,19 +19,24 @@
       mrow = "echo mrow";
     };
     language.base = "en_NZ.UTF-8";
-    packages = with pkgs; [
-      gnumake bintools zip unzip
-      man-pages man-db
-      tmux screen
-      ltrace
-      gnupg
-      file
-      dig
-    ];
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # common pkgs
+  home.packages = with pkgs; [
+    vim
+    gnumake
+    bintools
+    zip
+    unzip
+    man-pages
+    man-db
+    tmux
+    screen
+    ltrace
+    gnupg
+    file
+    dig
+  ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

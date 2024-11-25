@@ -36,7 +36,7 @@ stdenv.mkDerivation {
     qt6.full
   ];
 
-  # oop..
+  # TODO: fix
   src = /home/jess/misc/binaryninja_personal_linux.zip;
 
   buildPhase = ":";

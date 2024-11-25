@@ -1,12 +1,7 @@
-{ inputs
-, util
-, ...
-}: let
-  overlays = [
+{
+  imports = [
     ./expose-stable.nix
+    ./custom-dwm.nix
+    ./packages.nix
   ];
-  realizeOverlay = overlay:
-    import overlay { inherit inputs util; };
-in builtins.map
-  realizeOverlay
-  overlays
+}

@@ -2,60 +2,55 @@
 , inputs
 , util
 , ...
-}: let
-  filterUsers = predicate: let
-      users = builtins.map
-        (name: ./. + "/users/${name}")
-        (builtins.attrNames (builtins.readDir ./users));
-    in
-      builtins.filter predicate users;
-
-  hostHasUser = hostname: user:
-    builtins.hasAttr hostname (builtins.readDir (user + /hosts));
-
-  getUsersForHost = hostname:
-    filterUsers (hostHasUser hostname);
-in rec {
+}: rec {
   root = path: ./. + path;
   pathFrom = root: path: root + path;
   pathsFrom = root: paths:
     builtins.map (path: root + path) paths;
-  hmModule = path:
-    pathFrom (root /modules/hm) path;
-  hmModules = paths:
-    builtins.map hmModule paths;
-  nixosModule = path:
-    pathFrom (root /modules/nixos) path;
-  nixosModules = paths:
-    builtins.map nixosModule paths;
+  hmModule = pathFrom (root /modules/hm);
+  hmModules = builtins.map hmModule;
+  nixosModule = pathFrom (root /modules/nixos);
+  nixosModules = builtins.map nixosModule;
 
   pkgsConfig = {
     allowUnfree = true;
   };
 
-  getHost =
-    hostname: ./. + "/hosts/${hostname}";
-
-  getUser =
-    username: ./. + "/users/${username}";
-
-  mkHost =
-    hostname: users: let
-      userModules = builtins.map getUser users;
-      markerModule = root /modules/marker.nix;
-      host = getHost hostname;
-    in {
-      ${hostname} = import host {
-        extraModules =
-          userModules ++ [ markerModule ];
-
-        inherit lib util inputs hostname;
-      };
+  mkHost = hostname: users: lib.nixosSystem {
+    # system = lib.traceVal (import (./. + "/hosts/${hostname}") {});
+    system = "x86_64-linux";
+    specialArgs = {
+      inherit util inputs hostname;
     };
+    modules = lib.flatten [
+      (./. + "/hosts/${hostname}")
+      users
+      ./hosts/base.nix
+    ];
+  };
+
+  mkUserAtHost = hostname: host: username: _: {
+    "${username}@${hostname}" =
+      inputs.home-manager.lib.homeManagerConfiguration {
+        inherit (host) pkgs;
+        inherit (host.config.home-manager) extraSpecialArgs;
+        modules = [
+          (./. + "/users/${username}/env/${hostname}")
+          # for standalone
+          # https://nix-community.github.io/home-manager/options.xhtml#opt-nix.package
+          { nix.package = inputs.nixpkgs.legacyPackages.${host.pkgs.system}.nix; }
+        ];
+      };
+  };
+
+  mkOverlay = overlay: {
+    nixpkgs.overlays = [ overlay ];
+  };
 
   mkDevShell =
     nixpkgs: system: import ./shell.nix {
       pkgs = import nixpkgs { inherit system; };
+      inherit inputs;
     };
 
   mkDevShells =
