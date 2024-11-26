@@ -7,7 +7,9 @@
 Run `nix develop` for a devShell, `nix-shell` should also work.
 
 #### Hosts
-* Laptop: `jess-laptop`
+ - laptop: `jess-laptop`
+ - k8s-node `ari`
+ - desktop (for now) `server`
 
 #### Building on nixos
 In the flakes root directory:
