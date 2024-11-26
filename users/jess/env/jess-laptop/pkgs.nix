@@ -29,7 +29,6 @@
     nerdfonts
     ripgrep
     libclang
-    steam
     htop
     kubectl
     jq
