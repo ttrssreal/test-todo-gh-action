@@ -11,6 +11,7 @@
   ];
 
   # define the nixos user
+  # TODO: put pw in agenix
   users.users.jess = {
     description = "Jess";
     isNormalUser = true;
