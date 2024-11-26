@@ -1,0 +1,14 @@
+name: File issues for todo comments
+
+on: [ "push" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: File issues
+        uses: alstr/todo-to-issue-action@v5
