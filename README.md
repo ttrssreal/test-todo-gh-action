@@ -14,4 +14,12 @@ Run `nix develop` for a devShell, `nix-shell` should also work.
 #### Building on nixos
 In the flakes root directory:
 
-`$ nixos-rebuild switch --flake .#<hostname>`
+### Build
+`$ make build-<hostname>`
+
+example: `$ make build-ari`
+
+### Build and switch
+`$ make <hostname>`
+
+example: `$ make ari`
