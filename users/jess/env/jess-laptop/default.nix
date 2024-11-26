@@ -7,6 +7,7 @@
   imports = lib.flatten [
     (userRoot + /base.nix)
     ./pkgs.nix
+    ./xinit.nix
 
     (util.pathsFrom userRoot [
       /dwm-status
