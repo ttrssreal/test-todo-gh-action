@@ -11,7 +11,7 @@
       # /dwm-status
       /alacritty
       # /direnv
-      # /gpg
+      /gpg
       /nix
       /zsh
       /jessvim
