@@ -37,6 +37,7 @@ stdenv.mkDerivation {
   ];
 
   # TODO: fix
+  # Issue URL: https://github.com/ttrssreal/test-todo-gh-action/issues/12
   src = /home/jess/misc/binaryninja_personal_linux.zip;
 
   buildPhase = ":";
